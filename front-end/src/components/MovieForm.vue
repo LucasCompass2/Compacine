@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="container">
     <h1>Cadastrar filme</h1>
     <form @submit.prevent="handleSubmit">
       <div class="url">
@@ -66,18 +66,23 @@ export default {
 </script>
 
 <style scoped>
-.box {
+.container {
+  width: 50%;
+  padding: 20px 20px 20px 0px;
+  background-color: #f0f0f0;
+  border: 100px solid black;
+  border-radius: 5px;
+}
+
+form {
   display: flex;
   flex-direction: column;
-  background: var(--white, #ffffff);
-  padding: 4.5rem 3rem 4.5rem 3rem;
-  border-radius: 2rem 2rem;
-  width: 26rem;
+  align-items: center;
 }
 
 input {
-    font-size: 1.5rem;
-    display: block;
+  font-size: 1.5rem;
+  display: block;
 }
 
 div {
