@@ -1,5 +1,4 @@
 const movieService = require('../services/movieService');
-const Movie = require('../models/movie');
 
 exports.getMovies = async (req, res) => {
   try {
@@ -10,13 +9,43 @@ exports.getMovies = async (req, res) => {
   }
 };
 
-exports.createMovie = async (req, res) => {
+exports.getMovieById = async (req, res) => {
+  const movieId = req.params.id;
   try {
-    const { name, email } = req.body;
-    const newMovie = new Movie({ name, email });
-    const savedMovie = await movieService.createMovie(newMovie);
-    res.status(201).json(savedMovie);
+    const movie = await movieService.getMovieById(movieId);
+    res.status(200).json(movie);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.createMovie = async (req, res) => {
+  const movieData = req.body;
+  try {
+    const newMovie = await movieService.createMovie(movieData);
+    res.status(201).json(newMovie);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.updateMovie = async (req, res) => {
+  const movieId = req.params.id;
+  const movieData = req.body;
+  try {
+    const updatedMovie = await movieService.updateMovie(movieId, movieData);
+    res.status(200).json(updatedMovie);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteMovie = async (req, res) => {
+  const movieId = req.params.id;
+  try {
+    const deletedMovie = await movieService.deleteMovie(movieId);
+    res.status(200).json(deletedMovie);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

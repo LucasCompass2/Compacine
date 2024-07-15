@@ -5,11 +5,25 @@ const MovieSchema  = new mongoose.Schema({
         type: String,
         required: true
       },
-    email: {
+    description: {
         type: String,
         required: true,
-        unique: true
     },
+    gender: {
+        type: String,
+        required: true,
+    },
+    actors: {
+        type: [String],
+        required: true,
+    },
+    img: {
+        type: String,
+        required: true,
+    },
+    session: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'Session'
+    }]
 });
 
 
