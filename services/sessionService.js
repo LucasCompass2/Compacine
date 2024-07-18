@@ -1,4 +1,5 @@
 const Session = require('../models/session');
+const Ticket = require('../models/tickets');
 
 exports.createSession = async (sessionData) => {
   try {
@@ -7,6 +8,15 @@ exports.createSession = async (sessionData) => {
     return session;
   } catch (err) {
     throw new Error('Erro ao criar sessão: ' + err.message);
+  }
+};
+
+exports.getSession = async () => {
+  try {
+    const session = await Session.find();
+    return session;
+  } catch (err) {
+    throw new Error('Erro ao buscar sessão: ' + err.message);
   }
 };
 
@@ -22,29 +32,10 @@ exports.getSessionById = async (sessionId) => {
   }
 };
 
-exports.checkChairAvailability = async (sessionId, chair) => {
+exports.buyTicket = async (ticketData) => {
   try {
-    const session = await Session.findById(sessionId);
-    if (!session) {
-      throw new Error('Sessão não encontrada');
-    }
-    const ticket = session.tickets.find(t => t.chair === chair);
-    return !ticket; // Retorna true se a cadeira estiver disponível
-  } catch (err) {
-    throw new Error('Erro ao verificar disponibilidade de cadeira: ' + err.message);
-  }
-};
-
-exports.buyTicket = async (sessionId, chair, value) => {
-  try {
-    const isAvailable = await this.checkChairAvailability(sessionId, chair);
-    if (!isAvailable) {
-      throw new Error('Cadeira já está ocupada');
-    }
-    const ticketData = { session: sessionId, chair, value };
     const ticket = new Ticket(ticketData);
     await ticket.save();
-    await Session.findByIdAndUpdate(sessionId, { $push: { tickets: ticket._id } });
     return ticket;
   } catch (err) {
     throw new Error('Erro ao comprar ingresso: ' + err.message);

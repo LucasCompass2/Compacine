@@ -10,6 +10,15 @@ exports.createSession = async (req, res) => {
   }
 };
 
+exports.getSession = async (req, res) => {
+  try {
+    const session = await sessionService.getSession();
+    res.status(200).json(session);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 exports.getSessionById = async (req, res) => {
   const sessionId = req.params.id;
   try {
@@ -21,9 +30,9 @@ exports.getSessionById = async (req, res) => {
 };
 
 exports.buyTicket = async (req, res) => {
-  const { sessionId, chair, value } = req.body;
+  const ticketData = req.body;
   try {
-    const ticket = await sessionService.buyTicket(sessionId, chair, value);
+    const ticket = await sessionService.buyTicket(ticketData);
     res.status(201).json(ticket);
   } catch (err) {
     res.status(500).json({ error: err.message });

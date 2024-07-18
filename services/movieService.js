@@ -1,5 +1,15 @@
 const Movie = require('../models/movie');
 
+exports.createMovie = async (movieData) => {
+  try {
+    const movie = new Movie(movieData);
+    await movie.save();
+    return movie;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 exports.getMovies = async () => {
   try {
     const movies = await Movie.find();
@@ -18,16 +28,6 @@ exports.getMovieById = async (movieId) => {
     return movie;
   } catch (err) {
     throw new Error('Erro ao buscar filme: ' + err.message);
-  }
-};
-
-exports.createMovie = async (movieData) => {
-  try {
-    const movie = new Movie(movieData);
-    await movie.save();
-    return movie;
-  } catch (err) {
-    throw new Error(err.message);
   }
 };
 
