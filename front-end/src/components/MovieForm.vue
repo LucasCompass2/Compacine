@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Cadastrar filme</h1>
+    <h1>Cadastrar Filme</h1>
     <form @submit.prevent="handleSubmit">
       <div class="url">
         <label for="img">URL da Imagem:</label>
@@ -57,8 +57,10 @@ export default {
         this.form.description = '';
         this.form.actors = '';
         this.form.gender = '';
+        alert('Filme cadastrado com sucesso!');
       } catch (error) {
         console.error('Erro ao cadastrar filme:', error.message);
+        alert('Erro ao cadastrar filme');
       }
     }
   }
@@ -68,10 +70,10 @@ export default {
 <style scoped>
 .container {
   width: 50%;
-  padding: 20px 20px 20px 0px;
+  padding: 1.25rem 1.25rem 1.25rem 0rem;
   background-color: #f0f0f0;
-  border: 100px solid black;
-  border-radius: 5px;
+  border: 6.25rem solid black;
+  border-radius: 0.3125rem;
 }
 
 form {
